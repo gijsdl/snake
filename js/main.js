@@ -20,6 +20,26 @@ function createMap() {
     tiles = document.querySelectorAll(".tile");
     snake = new Snake(size, tiles);
     snake.createSnake();
+    document.addEventListener("keydown", checkArrow);
+}
+
+function checkArrow(e){
+    let direction = "";
+    switch (e.code){
+        case "ArrowUp":
+            direction = "north";
+            break;
+        case "ArrowRight":
+            direction = "east";
+            break;
+        case "ArrowDown":
+            direction = "south";
+            break;
+        case "ArrowLeft":
+            direction = "west";
+            break;
+    }
+    snake.changeDirection(direction);
 }
 
 start();
@@ -31,7 +51,5 @@ function start() {
         } else {
             snake.move();
         }
-        console.log(snake.alive);
-
-    }, 1000)
+    }, 100);
 }

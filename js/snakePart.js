@@ -1,15 +1,11 @@
 class SnakePart{
-    constructor(tiles, location, head, direction) {
+    constructor(tiles, location, type) {
         this.tiles = tiles;
-        this.head = head;
+        this.type = type;
         this.location = location;
-        if (this.head) {
-            this.direction = direction;
-        }
     }
 
     draw(){
-        console.log(this.location)
         this.tiles[this.location].classList.add("snake");
     }
 

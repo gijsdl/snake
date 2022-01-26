@@ -3,15 +3,21 @@
     margin: 0;
 }
 body{
-    background-color: black;
+    background-color: lightgreen;
 }
 
-main {
+main{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.game {
+    grid-area: 1/2/2/3;
+    background-color: black;
     margin: 0 auto 0 auto;
     display: grid;
     height: 100vh;
     width: 100vh;
-    grid-gap: 1px;
 }
 
 .tile{
@@ -19,8 +25,48 @@ main {
     width: 100%;
     border: 1px solid black;
     background-color: white;
+    transition: all 20ms linear;
+
 }
 
 .snake{
     background: green;
+    transition: all 20ms linear;
+}
+
+.apple{
+    background-color: red;
+}
+
+.end-screen{
+    grid-area: 1/2/2/3;
+    background-color: white;
+    border-radius: 5px;
+    border: 3px solid black;
+    margin: auto;
+    padding: 3%;
+    width: 20vw;
+    text-align: center;
+}
+
+.hide{
+    display: none;
+}
+
+.restart{
+    margin-top: 2%;
+    padding:0.5em;
+    background: green;
+    color: white;
+    border: 2px solid lightgreen;
+    border-radius: 5px;
+    box-shadow: 2px 3px gray;
+    /*letter-spacing: 0.5em;*/
+    /*font-style: bold;*/
+}
+.restart:hover{
+    background-color: greenyellow;
+}
+.restart:active{
+    background-color: lightgreen;
 }

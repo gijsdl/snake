@@ -4,7 +4,6 @@ class Snake {
         this.mapSize = mapSize;
         this.direction = "north";
         this.tiles = tiles;
-        this.alive = true;
     }
 
     createSnake() {
@@ -30,48 +29,103 @@ class Snake {
     }
 
     move() {
-        for (let i = this.partArray.length - 1; i >= 0; i--) {
-            let part = this.partArray[i];
-            if (part.type === "head") {
-                switch (this.direction) {
-                    case "north":
-                        part.location -= this.mapSize;
-                        if (part.location < 0) {
-                            this.alive = false;
-                        }
-                        break;
-                    case "east":
-
-                        if (part.location% this.mapSize  === this.mapSize -1) {
-                            this.alive = false;
-                        }
-                        part.location ++;
-                        break;
-                    case "south":
-                        part.location += this.mapSize;
-                        if (part.location > this.tiles.length) {
-                            this.alive = false;
-                        }
-                        break;
-                    case "west":
-                        if (part.location% this.mapSize  === 0) {
-                            this.alive = false;
-                        }
-                        part.location --;
-
-                        break;
+        let part = this.partArray[0];
+        let grabbedApple = false;
+        let oldLocation = part.location;
+        switch (this.direction) {
+            case "north":
+                part.location -= this.mapSize;
+                if (part.location < 0) {
+                    this.openEnd();
+                    return;
                 }
-            } else {
+                break;
+            case "east":
+
+                if (part.location % this.mapSize === this.mapSize - 1) {
+                    this.openEnd();
+                    return;
+                }
+                part.location++;
+                break;
+            case "south":
+                part.location += this.mapSize;
+                if (part.location > this.tiles.length) {
+                    this.openEnd();
+                    return;
+                }
+                break;
+            case "west":
+                if (part.location % this.mapSize === 0) {
+                    this.openEnd();
+                    return;
+                }
+                part.location--;
+
+                break;
+        }
+        if (this.tiles[part.location].classList.contains("snake")) {
+            this.openEnd();
+        }
+        if (this.tiles[part.location].classList.contains("apple")) {
+            grabbedApple = true;
+            this.grabApple(this.tiles[part.location], oldLocation);
+        }
+        let border = this.getBorderSide(part.location - oldLocation);
+        console.log(oldLocation - this.tiles[part.location])
+        part.draw(border, oldLocation);
+        if (!grabbedApple) {
+            for (let i = this.partArray.length - 1; i > 0; i--) {
+                let part = this.partArray[i];
+                let border = "";
+                let nextPartLocation;
                 if (part.type === "tail") {
                     this.tiles[part.location].classList.remove("snake");
+                    this.tiles[part.location].style.border = "1px solid black";
                 }
-                part.location = this.partArray[i-1].location;
+                if (i === 1) {
+                    part.location = oldLocation;
+                } else {
+                    part.location = this.partArray[i - 1].location;
+                }
+
+                if (part.type !== "tail") {
+                    nextPartLocation = this.partArray[i + 1].location;
+                    let locationDiff = part.location - nextPartLocation;
+                    border = this.getBorderSide(locationDiff);
+                }
+
+
+                part.draw(border, nextPartLocation);
             }
-            part.draw();
         }
     }
 
-    changeDirection(direction){
+    grabApple(tile, oldLocation) {
+        tile.classList.remove("apple");
+        this.partArray.splice(1, 0, new SnakePart(this.tiles, oldLocation, "body"));
+    }
+
+
+    changeDirection(direction) {
         this.direction = direction;
+    }
+
+    openEnd() {
+        clearInterval(timer);
+        openEndScreen();
+    }
+
+    getBorderSide(locationDiff) {
+        switch (locationDiff) {
+            case 1:
+                return "left";
+            case -1:
+                return "right";
+            case size:
+                return "top";
+            case -size:
+                return "bottom"
+        }
     }
 }

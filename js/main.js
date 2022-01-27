@@ -2,11 +2,17 @@ console.log("loaded");
 const size = 16;
 const gameDive = document.querySelector('.game');
 const endScreen = document.querySelector('.end-screen');
+const startScreen = document.querySelector('.start-screen');
 const resetBtn = document.querySelector('.restart');
+const startBtn = document.querySelector('.start');
+const point = document.querySelector('.point')
+const endScreenPoints = document.querySelector('.end-screen-points');
 let snake = null;
 let tiles = null;
 let timer = 0;
 let changedLocation = false;
+
+
 create();
 
 function create() {
@@ -56,8 +62,10 @@ function checkArrow(e) {
         changedLocation = true;
     }
 }
-
-start();
+startBtn.addEventListener("click", ()=>{
+    startScreen.classList.add("hide");
+    start();
+});
 
 function start() {
     timer = setInterval(() => {
@@ -79,8 +87,9 @@ function createApple() {
 }
 
 
-function openEndScreen() {
-    endScreen.classList.remove("hide")
+function openEndScreen(points) {
+    endScreen.classList.remove("hide");
+    endScreenPoints.textContent = `U heeft ${points} punten behaald`;
 }
 
 function reset(){
@@ -93,4 +102,5 @@ function reset(){
     snake.createSnake();
     start();
     endScreen.classList.add("hide");
+    point.textContent = 0;
 }

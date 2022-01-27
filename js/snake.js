@@ -4,6 +4,7 @@ class Snake {
         this.mapSize = mapSize;
         this.direction = "north";
         this.tiles = tiles;
+        this.points = 0;
     }
 
     createSnake() {
@@ -66,10 +67,13 @@ class Snake {
         }
         if (this.tiles[part.location].classList.contains("snake")) {
             this.openEnd();
+            return;
         }
         if (this.tiles[part.location].classList.contains("apple")) {
             grabbedApple = true;
             this.grabApple(this.tiles[part.location], oldLocation);
+            this.points += 100;
+            this.drawPoints();
         }
         let border = this.getBorderSide(part.location - oldLocation);
         console.log(oldLocation - this.tiles[part.location])
@@ -113,7 +117,7 @@ class Snake {
 
     openEnd() {
         clearInterval(timer);
-        openEndScreen();
+        openEndScreen(this.points);
     }
 
     getBorderSide(locationDiff) {
@@ -127,5 +131,10 @@ class Snake {
             case -size:
                 return "bottom"
         }
+    }
+
+    drawPoints(){
+        const pointDiv = document.querySelector(".point");
+        pointDiv.textContent = this.points;
     }
 }

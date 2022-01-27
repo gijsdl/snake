@@ -9,6 +9,26 @@ body{
 main{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    height: 100vh;
+}
+
+.left{
+    grid-area: 1/1/2/2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-screen{
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 5%;
+    height: 10vh;
+    width: 10vw;
+    text-align: center;
+    padding: 2%;
+    color: green;
+    font-weight: bold;
 }
 
 .game {
@@ -38,7 +58,7 @@ main{
     background-color: red;
 }
 
-.end-screen{
+.start-screen, .end-screen{
     grid-area: 1/2/2/3;
     background-color: white;
     border-radius: 5px;
@@ -47,13 +67,14 @@ main{
     padding: 3%;
     width: 20vw;
     text-align: center;
+    color: green;
 }
 
 .hide{
     display: none;
 }
 
-.restart{
+.start, .restart{
     margin-top: 2%;
     padding:0.5em;
     background: green;
@@ -64,9 +85,34 @@ main{
     /*letter-spacing: 0.5em;*/
     /*font-style: bold;*/
 }
-.restart:hover{
+.start:hover, .restart:hover{
     background-color: greenyellow;
 }
-.restart:active{
+
+.start:active, .restart:active{
     background-color: lightgreen;
+}
+
+.right{
+    grid-area: 1/3/2/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.points-div{
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 5%;
+    height: 20vh;
+    width: 10vw;
+    text-align: center;
+    padding: 2%;
+    color: green;
+    font-weight: bold;
+}
+
+.points-div p{
+    font-size: 2em;
 }

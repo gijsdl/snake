@@ -76,7 +76,6 @@ class Snake {
             this.drawPoints();
         }
         let border = this.getBorderSide(part.location - oldLocation);
-        console.log(oldLocation - this.tiles[part.location])
         part.draw(border, oldLocation);
         if (!grabbedApple) {
             for (let i = this.partArray.length - 1; i > 0; i--) {

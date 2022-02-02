@@ -5,10 +5,15 @@ const endScreen = document.querySelector('.end-screen');
 const startScreen = document.querySelector('.start-screen');
 const resetBtn = document.querySelector('.restart');
 const startBtn = document.querySelector('.start');
-const point = document.querySelector('.point')
+const submitBtn = document.querySelector('.submit');
+const nameInput = document.querySelector('.name');
+const point = document.querySelector('.point');
 const endScreenPoints = document.querySelector('.end-screen-points');
+const addScoreDiv = document.querySelector(".add-score");
+const topTenDiv = document.querySelector(".top-10");
 let snake = null;
 let tiles = null;
+let player = null;
 let timer = 0;
 let changedLocation = false;
 
@@ -28,9 +33,16 @@ function create() {
     }
     tiles = document.querySelectorAll(".tile");
     snake = new Snake(size, tiles);
+    player = new Player();
     snake.createSnake();
     document.addEventListener("keydown", checkArrow);
-    resetBtn.addEventListener("click", reset)
+    resetBtn.addEventListener("click", reset);
+    submitBtn.addEventListener("click", addPlayer);
+    nameInput.addEventListener("keypress", e=>{
+        if (e.key === "Enter"){
+            addPlayer();
+        }
+    })
 }
 
 function checkArrow(e) {
@@ -62,7 +74,8 @@ function checkArrow(e) {
         changedLocation = true;
     }
 }
-startBtn.addEventListener("click", ()=>{
+
+startBtn.addEventListener("click", () => {
     startScreen.classList.add("hide");
     start();
 });
@@ -77,6 +90,7 @@ function start() {
         }
         changedLocation = false;
     }, 200);
+
 }
 
 
@@ -90,11 +104,14 @@ function createApple() {
 function openEndScreen(points) {
     endScreen.classList.remove("hide");
     endScreenPoints.textContent = `U heeft ${points} punten behaald`;
+    showTopTen();
 }
 
-function reset(){
+function reset() {
     delete snake;
-    tiles.forEach(tile=>{
+    delete player;
+    player = new Player();
+    tiles.forEach(tile => {
         tile.classList.remove("snake");
         tile.classList.remove("apple");
     });
@@ -103,4 +120,52 @@ function reset(){
     start();
     endScreen.classList.add("hide");
     point.textContent = 0;
+    addScoreDiv.classList.remove("hide");
+}
+
+function addPlayer() {
+    const name = nameInput.value;
+    if (name !== "") {
+        player.addData(name, snake.points);
+        localStorage.setItem("players", JSON.stringify(player.getPlayerList()));
+        nameInput.value = "";
+        addScoreDiv.classList.add("hide");
+        showTopTen();
+    }
+}
+
+function showTopTen() {
+    topTenDiv.textContent = "";
+    const players = player.getPlayerList().sort((a, b) => b.points - a.points);
+    let length = players.length;
+    if (length > 0) {
+        if (length > 10) {
+            length = 10;
+        }
+        const table = document.createElement("table");
+        for (let i = 0; i < length; i++) {
+            const tr = document.createElement("tr");
+            if (players[i] === player) {
+                tr.classList.add("highlight");
+            }
+            const tdIndex = document.createElement("td");
+            tdIndex.classList.add("td-index");
+            tdIndex.textContent = i + 1;
+            const tdName = document.createElement("td");
+            tdName.classList.add("td-name");
+            tdName.textContent = players[i].name;
+            const tdPoints = document.createElement("td");
+            tdPoints.classList.add("td-points")
+            tdPoints.textContent = players[i].points;
+            tr.appendChild(tdIndex);
+            tr.appendChild(tdName);
+            tr.appendChild(tdPoints);
+            table.appendChild(tr);
+        }
+        topTenDiv.appendChild(table);
+    } else {
+        const p = document.createElement("p");
+        p.textContent = "Er zijn op dit moment nog geen scores";
+        topTenDiv.appendChild(p)
+    }
 }

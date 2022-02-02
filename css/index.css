@@ -23,7 +23,6 @@ main{
     background-color: white;
     border: 3px solid black;
     border-radius: 5%;
-    height: 10vh;
     width: 10vw;
     text-align: center;
     padding: 2%;
@@ -70,11 +69,15 @@ main{
     color: green;
 }
 
+.end-screen p{
+    font-weight: bold;
+}
+
 .hide{
     display: none;
 }
 
-.start, .restart{
+button{
     margin-top: 2%;
     padding:0.5em;
     background: green;
@@ -82,14 +85,13 @@ main{
     border: 2px solid lightgreen;
     border-radius: 5px;
     box-shadow: 2px 3px gray;
-    /*letter-spacing: 0.5em;*/
-    /*font-style: bold;*/
 }
-.start:hover, .restart:hover{
+
+button:hover{
     background-color: greenyellow;
 }
 
-.start:active, .restart:active{
+button:active{
     background-color: lightgreen;
 }
 
@@ -105,7 +107,6 @@ main{
     background-color: white;
     border: 3px solid black;
     border-radius: 5%;
-    height: 20vh;
     width: 10vw;
     text-align: center;
     padding: 2%;
@@ -115,4 +116,46 @@ main{
 
 .points-div p{
     font-size: 2em;
+}
+
+.top-10-total{
+    margin: 2% auto 5% auto;
+    padding: 5%;
+    border: 2px solid black;
+    border-radius: 2%;
+    text-align: center;
+    width: 80%;
+}
+
+.top-10 table{
+    margin: auto;
+}
+
+.top-10 table{
+    border-collapse: collapse;
+}
+
+.td-name{
+    padding: 2px 20px 2px 5px;
+}
+
+.td-points{
+    padding: 2px 5px 2px 20px;
+}
+
+.highlight td{
+    background-color: green;
+    color: white;
+}
+
+.add-score{
+    margin: 0 auto 5% auto;
+    border: 2px solid black;
+    border-radius: 2%;
+    width: 80%;
+    padding: 5%;
+}
+
+.add-score h3{
+    margin-bottom: 2%;
 }

@@ -6,9 +6,10 @@ class SnakePart {
     }
 
     draw(border, nextTileLocation) {
+
         let tile = this.tiles[this.location];
         let nextTile;
-        if (nextTileLocation) {
+        if (nextTileLocation !== null) {
             nextTile = this.tiles[nextTileLocation];
         }
         tile.classList.add("snake");
@@ -35,6 +36,7 @@ class SnakePart {
             case "top":
                 tile.style.borderTop = "1px solid green";
                 if (nextTile) {
+
                     nextTile.style.borderBottom = "1px solid green";
                 }
                 break;

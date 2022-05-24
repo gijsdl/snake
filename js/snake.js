@@ -75,6 +75,11 @@ class Snake {
             this.points += 100;
             this.drawPoints();
         }
+        if (this.tiles[part.location].classList.contains("bonus")) {
+            this.grabBonus(this.tiles[part.location]);
+            this.points += 200;
+            this.drawPoints();
+        }
         let border = this.getBorderSide(part.location - oldLocation);
         part.draw(border, oldLocation);
         if (!grabbedApple) {
@@ -109,6 +114,9 @@ class Snake {
         this.partArray.splice(1, 0, new SnakePart(this.tiles, oldLocation, "body"));
     }
 
+    grabBonus(tile) {
+        tile.classList.remove("bonus");
+    }
 
     changeDirection(direction) {
         this.direction = direction;

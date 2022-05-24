@@ -57,6 +57,10 @@ main{
     background-color: red;
 }
 
+.bonus{
+    background-color: #FFBF00;
+}
+
 .start-screen, .end-screen{
     grid-area: 1/2/2/3;
     background-color: white;

@@ -87,19 +87,29 @@ function start() {
 
         if (!document.querySelector(".apple")) {
             createApple();
+            if (!document.querySelector(".bonus")){
+                createBonus();
+            }
         }
         changedLocation = false;
     }, 200);
 
 }
 
-
 function createApple() {
-    const tiles = document.querySelectorAll(".tile:not(.snake)");
+    const tiles = document.querySelectorAll(".tile:not(.snake):not(.bonus)");
     const random = Math.floor(Math.random() * tiles.length);
     tiles[random].classList.add("apple");
 }
 
+function createBonus(){
+    const random = Math.floor(Math.random() * 5);
+    if (random === 1) {
+        const tiles = document.querySelectorAll(".tile:not(.snake):not(.apple)");
+        const randomPlace = Math.floor(Math.random() * tiles.length);
+        tiles[randomPlace].classList.add("bonus");
+    }
+}
 
 function openEndScreen(points) {
     endScreen.classList.remove("hide");

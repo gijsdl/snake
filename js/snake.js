@@ -116,6 +116,7 @@ class Snake {
 
     grabBonus(tile) {
         tile.classList.remove("bonus");
+        bonusCounter = 0;
     }
 
     changeDirection(direction) {

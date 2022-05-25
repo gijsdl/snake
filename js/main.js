@@ -16,6 +16,7 @@ let tiles = null;
 let player = null;
 let timer = 0;
 let changedLocation = false;
+let bonusCounter = 0;
 
 
 create();
@@ -103,12 +104,12 @@ function createApple() {
 }
 
 function createBonus(){
-    const random = Math.floor(Math.random() * 5);
-    if (random === 1) {
+    if (bonusCounter === 10) {
         const tiles = document.querySelectorAll(".tile:not(.snake):not(.apple)");
         const randomPlace = Math.floor(Math.random() * tiles.length);
         tiles[randomPlace].classList.add("bonus");
     }
+    bonusCounter++;
 }
 
 function openEndScreen(points) {
@@ -118,8 +119,6 @@ function openEndScreen(points) {
 }
 
 function reset() {
-    delete snake;
-    delete player;
     player = new Player();
     tiles.forEach(tile => {
         tile.classList.remove("snake");
